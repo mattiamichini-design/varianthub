@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, test } from './fixtures';
 import { spawn, type ChildProcess } from 'node:child_process';
 import { mkdtemp, mkdir, writeFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -23,7 +23,12 @@ test.beforeAll(async () => {
   runner=spawn(process.execPath,[process.env.VARIANTHUB_RUNNER_CLI ?? 'packages/runner/src/cli.mjs','start','--root',root,'--port',String(port)],{cwd:process.cwd(),stdio:'pipe'});
   await new Promise<void>((resolve,reject)=>{runner.stdout!.on('data',data=>{if(String(data).includes('VariantHub:'))resolve();});runner.once('exit',code=>reject(new Error(`Runner exited ${code}`)));runner.once('error',reject);});
 });
-test.afterAll(async () => {runner?.kill();sourceServer?.close();if(root)await rm(root,{recursive:true,force:true});});
+// Wait for both servers to release their ports, or a retried group cannot listen on them again.
+test.afterAll(async () => {
+  if (runner && runner.exitCode === null && runner.signalCode === null) await new Promise(resolve => { runner.once('exit', resolve); runner.kill(); });
+  if (sourceServer?.listening) await new Promise(resolve => { sourceServer.close(resolve); sourceServer.closeAllConnections(); });
+  if (root) await rm(root, {recursive:true, force:true});
+});
 
 test('plain HTML package uses the same viewer, relative assets and live scripts without a React project', async ({page}) => {
   await page.goto(`http://127.0.0.1:${port}/`);
