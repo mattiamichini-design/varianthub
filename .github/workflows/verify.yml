@@ -27,7 +27,7 @@ jobs:
       - run: npm run verify:packages
       - run: npm run build
       - run: npm run test:e2e -- --grep-invert 'favorites move|hero can be reentered|save failure details'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: browser-diagnostics
