@@ -2,7 +2,15 @@ import { test as base, expect, type Page } from '@playwright/test';
 
 export { expect };
 
-export const test = base;
+export const test = base.extend({
+  // The API client keeps idle sockets until the dev server's keep-alive timeout, which can close a socket
+  // just as a later call reuses it (ECONNRESET). Closing each connection after its response avoids that race.
+  request: async ({ playwright, baseURL }, provide) => {
+    const request = await playwright.request.newContext({ baseURL, extraHTTPHeaders: { Connection: 'close' } });
+    await provide(request);
+    await request.dispose();
+  },
+});
 
 /**
  * Wait until the exploration page has hydrated and loaded its shared layout. Controls are rendered on the
