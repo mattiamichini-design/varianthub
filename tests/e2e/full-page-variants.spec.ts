@@ -1,4 +1,5 @@
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { type Locator, type Page } from "@playwright/test";
+import { expect, expectLayoutLoaded, openExploration, test } from "./fixtures";
 
 const pageItem = {
   key: "northstar-landing",
@@ -41,6 +42,7 @@ async function contentFrame(iframe: Locator) {
 
 async function openPageItem(page: Page) {
   await page.goto(`/items/${pageItem.key}`);
+  await expectLayoutLoaded(page);
   await expect(page.locator(".vh-toolbar-selection").getByText("3 visible", { exact: false })).toBeVisible();
   await expect(page.getByText(pageItem.variants[0].name, { exact: true }).first()).toBeVisible();
 }
@@ -171,7 +173,7 @@ test.describe("page variants in the comparison grid", () => {
   });
 
   test("compares selected component variants in the same immersive shell", async ({ page }) => {
-    await page.goto("/items/action-surface");
+    await openExploration(page, "action-surface");
     await page.getByRole("button", { name: "Select Blue / standard", exact:true }).click();
     await page.getByRole("button", { name: "Select Violet / strong", exact:true }).click();
     await page.getByRole("button", { name: "Compare", exact: true }).click();

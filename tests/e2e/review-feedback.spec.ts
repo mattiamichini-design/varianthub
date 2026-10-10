@@ -1,4 +1,5 @@
-import {test,expect,type APIRequestContext} from '@playwright/test';
+import {type APIRequestContext} from '@playwright/test';
+import {expect,openExploration,test} from './fixtures';
 
 const ids=['slate-quiet','blue-standard','violet-strong'];
 async function seed(request:APIRequestContext,baseURL:string,canvas?:object){
@@ -24,8 +25,7 @@ test('selection stays on the grid, Compare uses only checked cards, and headings
   await expect(page.locator('.vh-toolbar-stat').nth(1)).toHaveText('0 selected');
   await page.getByRole('button',{name:'Open Blue / standard full screen',exact:true}).click();
   await expect(page).toHaveURL(/preview\/action-surface\/blue-standard/);
-  await page.goto('/items/action-surface');
-  await expect(page.getByRole('button',{name:'Select Slate / quiet',exact:true})).toBeVisible();
+  await openExploration(page,'action-surface');
   await page.getByRole('button',{name:'Select Blue / standard',exact:true}).click();
   await page.getByRole('button',{name:'Deselect Blue / standard',exact:true}).click();
   await expect(page.locator('.vh-card')).toHaveCount(3);
@@ -115,7 +115,7 @@ test('presets resolve colliding artboards and a custom viewport applies to every
 });
 
 test('command palette opens from shortcut, searches and navigates without losing keyboard focus',async({page})=>{
-  await page.goto('/items/action-surface');
+  await openExploration(page,'action-surface');
   await page.keyboard.press('Meta+k');
   const dialog=page.getByRole('dialog');
   await expect(dialog).toBeVisible();

@@ -1,4 +1,5 @@
-import { test, expect, type APIRequestContext } from '@playwright/test';
+import { type APIRequestContext } from '@playwright/test';
+import { expect, openExploration, test } from './fixtures';
 
 test.beforeEach(async({page})=>page.setViewportSize({width:1775,height:1066}));
 
@@ -14,7 +15,7 @@ async function setLayout(request:APIRequestContext,baseURL:string,key:string,col
 test('all twelve registrations stay visible below the twenty variant limit',async({page,request,baseURL})=>{
   expect((await request.get('/api/workspace/variant-growth-limit')).status()).toBe(200);
   await setLayout(request,baseURL!,'responsive-controls');
-  await page.goto('/items/responsive-controls');
+  await openExploration(page,'responsive-controls');
   await expect(page.getByText('12 visible',{exact:false})).toBeVisible();
   await expect(page.locator('.vh-page-card')).toHaveCount(12);
   await page.getByRole('button',{name:'More actions',exact:true}).click();

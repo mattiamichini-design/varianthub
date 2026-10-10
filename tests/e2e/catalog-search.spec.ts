@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { expect, openExploration, test } from './fixtures';
 
 test('catalog reports matching results and restores its description when search is cleared', async ({ page }) => {
   await page.goto('/workspace');
@@ -18,7 +18,7 @@ test('catalog reports matching results and restores its description when search 
 });
 
 test('exploration chooser excludes the internal landing and retains search and native sorting', async ({ page }) => {
-  await page.goto('/items/northstar-landing');
+  await openExploration(page, 'northstar-landing');
   await page.keyboard.press('Control+k');
   const dialog = page.getByRole('dialog', { name: 'Open exploration' });
   const search = dialog.getByRole('combobox', { name: 'Search explorations' });
