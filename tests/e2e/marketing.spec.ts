@@ -1,4 +1,15 @@
-import { expect, test } from "@playwright/test";
+import { expect, test, type Locator, type Page } from "@playwright/test";
+
+/**
+ * Continue one wheel gesture, a notch at most every 90 ms (well inside the hero's 180 ms gesture window),
+ * until the expected state appears. Ending on state keeps the test within budget on slow runners.
+ */
+async function wheelUntil(page: Page, deltaY: number, target: Locator, attribute: string, value: string) {
+  await expect(async () => {
+    await page.mouse.wheel(0, deltaY);
+    await expect(target).toHaveAttribute(attribute, value, { timeout: 90 });
+  }).toPass({ intervals: [0], timeout: 15_000 });
+}
 
 test("public playground has working HTML and served URL examples", async ({ page }) => {
   for (const name of ["Project brief", "Live brief URL"]) {
@@ -132,7 +143,8 @@ test("scroll expands the hero, advances all views and releases the page", async 
     [0.8, "Keep"],
   ] as const) {
     await page.evaluate(
-      (y) => window.scrollTo(0, y),
+      // The landing scrolls smoothly; jump so later scroll positions are measured from a settled page.
+      (y) => window.scrollTo({ top: y, behavior: "instant" }),
       bounds.y + (bounds.height - 900) * progress - 16,
     );
     await expect(
@@ -392,13 +404,11 @@ test("continuous wheel input advances and reverses without needing an idle gap",
   await page.goto("/");
   const track = page.locator(".hero-scroll");
   const box = await track.boundingBox();
-  await page.evaluate(y => scrollTo(0,y), box!.y + 200);
+  await page.evaluate(y => scrollTo({top:y,behavior:"instant"}), box!.y + 200);
   await expect(track).toHaveAttribute("data-pinned", "true");
   await page.mouse.move(1400,500);
-  for (let i=0;i<22;i++) { await page.mouse.wheel(0,100); await page.waitForTimeout(90); }
-  await expect(page.getByRole("tab",{name:"Keep",exact:true})).toHaveAttribute("aria-selected","true");
-  for (let i=0;i<32;i++) { await page.mouse.wheel(0,-100); await page.waitForTimeout(90); }
-  await expect(track).toHaveAttribute("data-pinned","false");
+  await wheelUntil(page, 100, page.getByRole("tab",{name:"Keep",exact:true}), "aria-selected", "true");
+  await wheelUntil(page, -100, track, "data-pinned", "false");
   expect(await page.evaluate(() => scrollY)).toBeLessThan(box!.y);
 });
 
