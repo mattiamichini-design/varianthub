@@ -50,7 +50,7 @@
     "vitest": "^4.1.11"
   },
   "dependencies": {
-    "@xyflow/react": "^12.11.6"
+    "@xyflow/react": "^12.12.0"
   },
   "license": "MIT",
   "engines": {
