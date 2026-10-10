@@ -43,6 +43,7 @@ If you change `packages/core` or `packages/runner`, also run `npm run verify:pac
 ## Pull requests
 
 - Keep each pull request to one change, and add or update tests for the behavior you touch.
+- Open the pull request as a draft while you are still pushing changes. CI skips drafts; it runs when you mark the pull request ready for review and on each push after that.
 - Use [Conventional Commits](https://www.conventionalcommits.org/) for commit messages, for example `fix(runner): reject paths outside the configured roots`.
 - Update the README or the package READMEs when you change commands, configuration or behavior they describe.
 - Do not add publishing steps or package-registry install instructions. GitHub is the only distribution channel, and every package keeps `"private": true`.

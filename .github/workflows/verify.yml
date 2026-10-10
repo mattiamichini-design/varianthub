@@ -2,6 +2,11 @@ name: Verify site and installable packages
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "*.md"
+      - "docs/**"
+      - LICENSE
+      - ".github/ISSUE_TEMPLATE/**"
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
     paths-ignore:
