@@ -1,4 +1,5 @@
-import { expect, test, type Locator, type Page } from '@playwright/test';
+import { type Locator, type Page } from '@playwright/test';
+import { expect, expectLayoutLoaded, openExploration, test } from './fixtures';
 
 /** Press the drag handle and move past the activation distance until dnd-kit reports an active drag. */
 async function startDrag(page: Page, handle: Locator) {
@@ -15,13 +16,14 @@ async function startDrag(page: Page, handle: Locator) {
 
 test('favorites move between sections, persist and accept a drag into the empty area', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1100 });
-  await page.goto('/items/action-surface');
+  await openExploration(page, 'action-surface');
   const favoriteButton = page.getByRole('button', { name: 'Add Blue / standard to favorites', exact: true });
   await favoriteButton.click();
   await expect(page.getByRole('button', { name: 'Remove Blue / standard from favorites', exact: true })).toBeVisible();
   await expect(page.locator('.vh-card')).toHaveCount(3);
   await expect(page.locator('.vh-grid-card[data-group="favorites"]')).toHaveCount(1);
   await page.reload();
+  await expectLayoutLoaded(page);
   const remove = page.getByRole('button', { name: 'Remove Blue / standard from favorites', exact: true });
   await expect(remove).toBeVisible();
   await remove.click();
@@ -58,7 +60,7 @@ test('favorites move between sections, persist and accept a drag into the empty 
 
 
 test('starring a live component keeps its current interaction state', async ({ page }) => {
-  await page.goto('/items/action-surface');
+  await openExploration(page, 'action-surface');
   const card = page.locator('.vh-grid-card').filter({ has: page.getByRole('button', { name: 'Reorder Blue / standard', exact: true }) });
   await card.getByRole('button', { name: 'Request approval', exact: true }).click();
   await card.getByRole('button', { name: 'Add Blue / standard to favorites', exact: true }).click();
@@ -75,7 +77,7 @@ test('starring a live component keeps its current interaction state', async ({ p
 });
 
 test('starring a full-page preview does not reload its live document', async ({ page }) => {
-  await page.goto('/items/fieldwork-html');
+  await openExploration(page, 'fieldwork-html');
   await page.getByRole('button', { name: 'Add Afterhours / nocturnal to favorites', exact: true }).scrollIntoViewIfNeeded();
   const frame = page.frameLocator('iframe[src="/examples/fieldwork/afterhours.html"]').first();
   await expect(frame.getByRole('heading', { name: 'Less noise. More wonder.' })).toBeVisible();
@@ -89,7 +91,7 @@ test('starring a full-page preview does not reload its live document', async ({ 
 
 
 test('sections collapse independently without resetting a live preview', async ({ page }) => {
-  await page.goto('/items/fieldwork-html');
+  await openExploration(page, 'fieldwork-html');
   await page.getByRole('button', { name: 'Add Afterhours / nocturnal to favorites', exact: true }).scrollIntoViewIfNeeded();
   const frame = page.frameLocator('iframe[src="/examples/fieldwork/afterhours.html"]').first();
   await expect(frame.getByRole('heading', { name: 'Less noise. More wonder.' })).toBeVisible();
@@ -111,7 +113,7 @@ test('sections collapse independently without resetting a live preview', async (
 });
 
 test('hiding a favorite preserves its star when made visible again', async ({ page }) => {
-  await page.goto('/items/action-surface');
+  await openExploration(page, 'action-surface');
   await page.getByRole('button', { name: 'Add Blue / standard to favorites', exact: true }).click();
   const openChooser = async () => {
     await page.getByRole('button', { name: 'More actions', exact: true }).click();

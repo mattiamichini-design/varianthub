@@ -1,10 +1,10 @@
-import { expect, test } from '@playwright/test';
+import { expect, openExploration, test } from './fixtures';
 
 test('HTML examples load their assets and interactions inside the real preview', async ({ page }) => {
   await page.goto('/workspace');
   await page.getByRole('combobox', { name: 'Filter by source' }).selectOption('html');
   await expect(page.locator('.vh-exploration-card')).toHaveCount(1);
-  await page.goto('/items/fieldwork-html');
+  await openExploration(page, 'fieldwork-html');
   const frame = page.frameLocator('iframe[src="/examples/fieldwork/index.html"]').first();
   await expect(frame.getByRole('heading', { name: 'A little closer to the outside.' })).toBeVisible();
   await frame.getByRole('link', { name: 'Explore the journal' }).click();
@@ -25,7 +25,7 @@ test('external examples retain their URL and support cross-origin frame interact
   await page.goto('/workspace');
   await page.getByRole('combobox', { name: 'Filter by source' }).selectOption('url');
   await expect(page.locator('.vh-exploration-card')).toHaveCount(1);
-  await page.goto('/items/external-playground');
+  await openExploration(page, 'external-playground');
   const frame = page.frameLocator('iframe[src="https://threejs.org/examples/css3d_periodictable.html"]').first();
   await frame.getByRole('button', { name: 'SPHERE' }).click();
   await expect(frame.getByRole('button', { name: 'Sphere active' })).toBeVisible();

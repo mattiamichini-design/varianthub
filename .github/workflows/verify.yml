@@ -18,7 +18,6 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e -- --grep 'favorites move|hero can be reentered|save failure details'
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run test:core
@@ -26,7 +25,7 @@ jobs:
       - run: npm run audit:history
       - run: npm run verify:packages
       - run: npm run build
-      - run: npm run test:e2e -- --grep-invert 'favorites move|hero can be reentered|save failure details'
+      - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
