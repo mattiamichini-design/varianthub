@@ -304,7 +304,9 @@ test.describe("immersive page preview", () => {
       .toBeGreaterThanOrEqual(cobaltScroll - 2);
   });
 
-  test("opens external links in a new tab without navigating the embedded document", async ({ page }) => {
+  test("opens external links in a new tab without navigating the embedded document", async ({ page, context }) => {
+    // The popup only needs to reach the external URL; keep the public site out of the result.
+    await context.route("https://example.com/**", route => route.fulfill({ contentType: "text/html", body: "<h1>Example Domain</h1>" }));
     await page.goto(`/preview/${pageItem.key}/${pageItem.variants[0].id}`);
     const frame = await contentFrame(activeImmersiveFrame(page));
     const frameUrl = frame.url();
