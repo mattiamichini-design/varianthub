@@ -129,12 +129,21 @@ test('an external layout change is visible and reload recovers without overwriti
   await page.goto('/items/responsive-controls');
   await expect(page.locator('button[title="2 columns"]:visible')).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('.vh-save-status--saved')).toHaveAttribute('title','Saved');
+  // The page checks for external changes every 2 s. Hold those checks so the edit below is made against the
+  // revision the page loaded; otherwise a check that lands first adopts the change and no conflict occurs.
+  let releaseChecks!:()=>void;
+  const checksHeld=new Promise<void>(resolve=>{releaseChecks=resolve;});
+  await page.route('**/api/workspace/responsive-controls',async route=>{
+    if(route.request().method()==='GET')await checksHeld;
+    await route.fallback();
+  });
   await setLayout(request,baseURL!,'responsive-controls',3);
   await page.locator('button[title="4 columns"]:visible').click();
   await page.getByRole('button',{name:/Save conflict/}).click();
   const conflict=page.getByRole('dialog',{name:'Resolve save conflict'});
   await expect(conflict.getByText('Reloading the shared layout replaces your local unsaved choices.')).toBeVisible();
   expect((await (await request.get('/api/workspace/responsive-controls')).json()).layout.gridCols).toBe(3);
+  releaseChecks();
   await conflict.getByRole('button',{name:'Reload shared layout'}).click();
   await expect(page.locator('button[title="3 columns"]:visible')).toHaveAttribute('aria-pressed','true');
 });
