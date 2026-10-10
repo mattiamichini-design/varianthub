@@ -1,0 +1,64 @@
+.vh-root,
+.vh-immersive {
+  --vh-color-background: #ffffff;
+  --vh-color-surface: #ffffff;
+  --vh-color-surface-muted: #f5f5f5;
+  --vh-color-canvas: #f8f8f9;
+  --vh-color-foreground: #101426;
+  --vh-color-foreground-muted: #5f606b;
+  --vh-color-border: #e7e7ea;
+  --vh-color-border-strong: #d9d9de;
+  --vh-color-accent: #18181b;
+  --vh-color-accent-foreground: #ffffff;
+  --vh-color-accent-soft: #f5f5f5;
+  --vh-color-accent-ring: rgb(16 20 38 / 12%);
+  --vh-color-focus: #0066cc;
+  --vh-color-shadow: rgb(16 20 38 / 16%);
+  --vh-color-star: #b76b00;
+  --vh-color-success: #18794e;
+  --vh-color-warning: #9a6700;
+  --vh-color-destructive: #b42318;
+  --vh-color-cover-0: #f0ecfa;
+  --vh-color-cover-1: #e7f3ed;
+  --vh-color-cover-2: #e9f0fa;
+  --vh-color-cover-3: #f5f0e5;
+  --vh-font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --vh-font-mono: "Roboto Mono", "SFMono-Regular", ui-monospace, monospace;
+  --vh-radius-sm: 8px;
+  --vh-radius-md: 10px;
+  --vh-radius-lg: 14px;
+  --vh-radius-xl: 18px;
+  --vh-radius-2xl: 24px;
+  --vh-space-1: 4px;
+  --vh-space-2: 8px;
+  --vh-space-3: 12px;
+  --vh-space-4: 16px;
+  --vh-space-5: 20px;
+  --vh-space-6: 24px;
+  --vh-space-8: 32px;
+  --vh-text-xs: 12px;
+  --vh-text-sm: 13px;
+  --vh-text-base: 14px;
+  --vh-text-lg: 16px;
+  --vh-control-sm: 36px;
+  --vh-control-md: 40px;
+  --vh-control-lg: 44px;
+  --vh-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+:is(.dark .vh-root, .vh-root.vh-theme-dark, .dark .vh-immersive, .vh-immersive.vh-theme-dark) {
+  --vh-color-background: #17171a;
+  --vh-color-surface: #202024;
+  --vh-color-surface-muted: #29292e;
+  --vh-color-canvas: #151518;
+  --vh-color-foreground: #fafafa;
+  --vh-color-foreground-muted: #b4b4bd;
+  --vh-color-border: #33333a;
+  --vh-color-border-strong: #45454f;
+  --vh-color-accent: #fafafa;
+  --vh-color-accent-foreground: #18181b;
+  --vh-color-accent-soft: #29292e;
+  --vh-color-accent-ring: rgb(255 255 255 / 18%);
+  --vh-color-shadow: rgb(0 0 0 / 42%);
+  color-scheme: dark;
+}

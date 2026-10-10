@@ -1,0 +1,41 @@
+{
+  "name": "varianthub",
+  "version": "0.6.2",
+  "description": "Local live UI exploration workspace",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "bin": {
+    "varianthub": "src/cli.mjs"
+  },
+  "exports": {
+    "./server": "./src/workspace.mjs"
+  },
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "LICENSE",
+    "skills",
+    "!src/*.test.mjs"
+  ],
+  "scripts": {
+    "test": "npm run build && node --test src/*.test.mjs",
+    "build": "node build.mjs",
+    "prepack": "npm run build"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "varianthub-core": "0.6.2"
+  },
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattiamichini-design/varianthub.git",
+    "directory": "packages/runner"
+  }
+}

@@ -1,0 +1,6 @@
+body { margin: 0; font-family: system-ui, sans-serif; }
+.example { display: grid; gap: 16px; padding: 24px; background: #e6f5ef; }
+.example h1 { margin: 0; }
+.example button, .example input { padding: 12px; font: inherit; }
+.alternate .example { background: #fbe0e8; }
+@media (max-width: 500px) { .example { border-top: 8px solid #217862; } }

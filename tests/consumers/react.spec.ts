@@ -1,0 +1,33 @@
+import { test, expect } from '@playwright/test';
+
+test('packed React host opens the workspace, runs components and navigates Grid, Canvas and detail', async ({page}) => {
+  const failures: string[] = [];
+  page.on('pageerror', error => failures.push(error.message));
+  await page.goto('/');
+  await expect(page.getByRole('button', {name: /Counter exploration Counter exploration/})).toBeVisible();
+  await expect(page.getByText('Install VariantHub', {exact: true})).toHaveCount(0);
+  await page.goto('/items/counter');
+  await page.getByRole('button', {name: 'Count 0', exact: true}).first().click();
+  await expect(page.getByRole('button', {name: 'Count 1', exact: true})).toBeVisible();
+  await page.getByRole('button', {name: 'Canvas', exact: true}).click();
+  await page.getByRole('button', {name: 'Hand tool', exact: true}).click();
+  const frame = page.frameLocator('iframe').first();
+  await expect(frame.getByRole('heading', {name: 'React counter'})).toBeVisible();
+  await frame.getByRole('button', {name: 'Count 0', exact: true}).click();
+  await expect(frame.getByRole('button', {name: 'Count 1', exact: true})).toBeVisible();
+  await page.getByRole('button', {name: 'Grid', exact: true}).click();
+  await page.getByRole('button', {name: 'More actions', exact: true}).click();
+  await page.getByRole('menuitem', {name: 'Compare all', exact: true}).click();
+  await expect(page).toHaveURL(/\/preview\/quiet/);
+  await expect(page.frameLocator('iframe:visible').first().getByRole('heading', {name: 'React counter'})).toBeVisible();
+  await page.getByRole('button', {name: /next variant/i}).click();
+  await expect(page).toHaveURL(/\/preview\/bold/);
+  await page.reload();
+  await expect(page.frameLocator('iframe:visible').first().getByRole('heading', {name: 'React counter'})).toBeVisible();
+  await page.getByRole('button', {name: 'Responsive', exact: true}).click();
+  await expect(page.locator('iframe')).toHaveCount(4);
+  const mobile = page.frameLocator('iframe').first();
+  await expect(mobile.locator('.example')).toHaveCSS('border-top-width', '8px');
+  await expect(page.frameLocator('iframe').last().locator('.example')).toHaveCSS('border-top-width', '0px');
+  expect(failures).toEqual([]);
+});

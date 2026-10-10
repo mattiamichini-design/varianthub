@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "projectId": "varianthub-demo",
+  "roots": [
+    "public"
+  ],
+  "explorations": [
+    {
+      "key": "action-surface",
+      "sourcePaths": [
+        "src/components/variant-hub-catalog.tsx"
+      ]
+    },
+    {
+      "key": "information-card",
+      "sourcePaths": [
+        "src/components/variant-hub-catalog.tsx"
+      ]
+    },
+    {
+      "key": "northstar-landing",
+      "sourcePaths": [
+        "src/components/variant-hub-catalog.tsx"
+      ]
+    },
+    {
+      "key": "responsive-controls",
+      "sourcePaths": [
+        "src/components/variant-hub-catalog.tsx"
+      ]
+    },
+    {
+      "key": "variant-growth-limit",
+      "sourcePaths": [
+        "src/components/variant-hub-catalog.tsx"
+      ]
+    },
+    {
+      "key": "fieldwork-html",
+      "sourcePaths": [
+        "public/examples/fieldwork"
+      ]
+    },
+    {
+      "key": "external-playground"
+    }
+  ]
+}

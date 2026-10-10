@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project brief</title>
+<style>
+  @font-face { font-family: Geist; font-style: normal; font-weight: 100 900; font-display: swap; src: url('./fonts/geist-latin.woff2') format('woff2'); }
+  @font-face { font-family: 'Instrument Serif'; font-style: normal; font-weight: 400; font-display: swap; src: url('./fonts/instrument-serif-latin.woff2') format('woff2'); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #fff; color: #000; font: 16px/24px Geist, system-ui, sans-serif; }
+  main { width: min(100%, 1000px); margin: 0 auto; padding: 48px 64px; }
+  header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid #dce0e3; padding-bottom: 20px; line-height: 20px; }
+  header strong { font-weight: 400; }
+  .brief { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 96px; padding-top: 56px; }
+  .introduction { display: grid; align-content: start; gap: 20px; }
+  h1 { margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-size: 56px; font-weight: 400; letter-spacing: -.03em; line-height: 58px; }
+  p { margin: 0; }
+  form { display: grid; align-content: start; gap: 24px; padding-top: 24px; font-family: system-ui, sans-serif; }
+  label { display: grid; gap: 8px; margin: 0; font-weight: 600; line-height: 20px; }
+  input, textarea, button { font: inherit; font-weight: 400; }
+  input, textarea { width: 100%; min-width: 0; border: 1px solid #bdc7c3; border-radius: 6px; padding: 12px; background: #fff; color: #000; line-height: 20px; }
+  input::placeholder { color: #6b7470; opacity: 1; }
+  textarea { min-height: 160px; resize: vertical; }
+  button { width: 100%; min-height: 48px; padding: 12px 20px; border: 0; border-radius: 6px; background: #17604c; color: #fff; cursor: pointer; line-height: 20px; }
+  a { color: #17604c; text-decoration: none; }
+  :focus-visible { outline: 3px solid #b44970; outline-offset: 3px; }
+  [role=status]:empty { position: absolute; }
+  #details { display: grid; gap: 16px; margin-top: 64px; padding-top: 24px; border-top: 1px solid #dce0e3; }
+  h2 { margin: 0; font-size: 24px; font-weight: 700; line-height: 30px; }
+  @media (max-width: 650px) {
+    main { padding: 24px 16px; }
+    .brief { grid-template-columns: 1fr; gap: 24px; padding-top: 40px; }
+    h1 { font-size: 42px; line-height: 58px; }
+    .introduction p { line-height: 20px; }
+    form { padding-top: 0; font-family: Geist, system-ui, sans-serif; }
+    textarea { min-height: 98px; }
+    button { min-height: 44px; }
+    #details { margin-top: 80px; }
+  }
+</style>
+<main>
+  <header><strong>Fieldwork</strong><a href="#details">Project details</a></header>
+  <section class="brief"><div class="introduction"><h1>A good project starts with a clear brief.</h1>
+  <p>Capture the next direction for your team.</p>
+  </div><form>
+    <label>Project name<input name="project" required placeholder="Website refresh"></label>
+    <label>What should change?<textarea name="brief" rows="3" required></textarea></label>
+    <button>Save brief</button><p role="status" aria-live="polite"></p>
+  </form></section>
+  <section id="details"><h2>Project details</h2><p>Agree on the audience, scope and one useful outcome before starting the next exploration.</p></section>
+</main>
+<script>
+  document.querySelector('form').addEventListener('submit', event => {
+    event.preventDefault();
+    document.querySelector('[role=status]').textContent = 'Brief saved for this preview.';
+  });
+</script>
+</html>
