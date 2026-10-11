@@ -27,7 +27,7 @@
     "prepack": "npm run build"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.28.2",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "varianthub-core": "0.6.2"
