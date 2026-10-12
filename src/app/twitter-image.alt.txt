@@ -1,1 +1,1 @@
-VariantHub: Good interfaces deserve a proper comparison.
+VariantHub: a local workspace for comparing interface variants side by side, live in your own code. Two versions of the same page sit next to each other on a blue field.
