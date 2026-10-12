@@ -782,7 +782,7 @@ function Organization({ openPlayground }: { openPlayground: () => void }) {
                 <Image
                   src="/brand/workspace-search.png"
                   width={1016}
-                  height={1028}
+                  height={1024}
                   alt="Workspace search with recent items and favorites"
                 />
               </button>

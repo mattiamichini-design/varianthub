@@ -674,6 +674,12 @@
   background: var(--vh-color-surface);
 }
 
+.vh-selector-inline-chip svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex: 0 0 auto;
+}
+
 .vh-selector-option-count {
   flex: 0 0 auto;
   white-space: nowrap;
