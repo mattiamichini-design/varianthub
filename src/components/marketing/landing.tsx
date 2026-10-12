@@ -1177,7 +1177,9 @@ export function MarketingLanding() {
             <h3>Project</h3>
             <a href="#installation">Installation</a>
             <button onClick={() => openPlayground()}>Playground</button>
-            <a href="https://github.com/mattiamichini-design/varianthub">GitHub</a>
+            <a href="https://github.com/mattiamichini-design/varianthub" target="_blank" rel="noopener">
+              GitHub
+            </a>
           </div>
         </div>
         <div className="footer-bottom">
