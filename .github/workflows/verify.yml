@@ -9,11 +9,6 @@ on:
       - ".github/ISSUE_TEMPLATE/**"
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
-    paths-ignore:
-      - "*.md"
-      - "docs/**"
-      - LICENSE
-      - ".github/ISSUE_TEMPLATE/**"
   workflow_dispatch:
 permissions:
   contents: read
