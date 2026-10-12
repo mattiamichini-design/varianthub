@@ -443,13 +443,13 @@ export function ComponentSelector({
                       <span className="vh-selector-option-chips">
                         {(component.categories ?? []).slice(0, 2).map((category) => (
                           <span key={`${component.key}-${category}`} className="vh-selector-inline-chip">
-                            <FolderTree className="h-3 w-3" />
+                            <FolderTree aria-hidden="true" />
                             {category}
                           </span>
                         ))}
                         {(component.tags ?? []).slice(0, 2).map((tag) => (
                           <span key={`${component.key}-${tag}`} className="vh-selector-inline-chip">
-                            <Tags className="h-3 w-3" />
+                            <Tags aria-hidden="true" />
                             {tag}
                           </span>
                         ))}
